@@ -1,26 +1,23 @@
 const slider = document.getElementById('slider'),
-    right = document.getElementById('right'),
     left = document.getElementById('left'),
-    slide = slider.children[0],
-    count = slider.children.length,
-    slider__show = document.getElementById('slider__show'),
-    slide__in = 3
-var position = 0
+    right = document.getElementById('right'),
+    slideOffset = document.getElementsByClassName('slider__item')[0].offsetWidth,
+    viewslide = 3,
+    maxWidth = (slider.children.length - viewslide) * slideOffset
+let position = 0
 
+document.getElementById('slider__show').style.width = viewslide * slideOffset
 
-slider__show.style.width = `${slide__in * slide.offsetWidth}px`
-
-
-right.addEventListener('click', e => {
-    if (position - slide.offsetWidth <= -(count * slide.offsetWidth - (slide__in - 1) * slide.offsetWidth))
+left.addEventListener('click', () => {
+    if (position <= 0)
         return
-    position -= slide.offsetWidth
-    slider.style.transform = `translate(${position}px, 0)`
+    position -= slideOffset
+    slider.style.right = position + 'px'
 })
 
-left.addEventListener('click', e => {
-    if (position + slide.offsetWidth > 0)
+right.addEventListener('click', () => {
+    if (position >= maxWidth)
         return
-    position += slide.offsetWidth
-    slider.style.transform = `translate(${position}px, 0)`
+    position += slideOffset
+    slider.style.right = position + 'px'
 })
